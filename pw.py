@@ -44,25 +44,7 @@ def insert_mysql(item):
         print('---------------写入不成功------------')
     db.close()
 
-# class PyMongo(object):
-#     '''创建mongodb类,提供查询工作'''
 
-#     def __init__(self, database):
-#         '''注册登陆mongodb'''
-#         client = pymongo.MongoClient(host='localhost', port=27017)
-#         self.db = client[database]
-
-#     def getlist(self, collection, title):
-#         '''从mongodb中查询提取数据,返回数据列表'''
-#         coll = self.db[collection]
-#         result = coll.find({'title': title}, {'picname': 1,'src': 1, 'picstore': 1})  # .distinct('src')
-#         return result
-
-#     def insert(self, collection,item):
-#         '''向mongodbcollection里插入数据'''
-#         coll = self.db[collection]
-
-#         coll.insert_one(item)
 
 
 def main():
@@ -105,8 +87,6 @@ def main():
     
 
     insert_mysql(item)
-    insert_mongodb(item)
-
 
 if __name__ == '__main__':
     main()
