@@ -29,7 +29,7 @@ pltl.set_xlabel('Time(seconds)')
 pltl.set_ylabel('L1 Strain')
 pltl.set_title('L1 Strain')
 
-pltref = fig.add_subplot(212)在2行1列的第2幅
+pltref = fig.add_subplot(212)#在2行1列的第2幅
 pltref.plot(reftime, ref_H1)
 pltref.set_xlabel('Time(seconds)')
 pltref.set_ylabel('Template Strain')
