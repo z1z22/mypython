@@ -58,7 +58,8 @@ def main():
 
     while True:
         item[itemlist[i]] = input('请输入{}:'.format(itemlist[i]))
-        string = "{}='{}'".format(itemlist[i], item[itemlist[i]])
+        # string = "{}='{}'".format(itemlist[i], item[itemlist[i]])
+        string = "{} like '%{}%'".format(itemlist[i], item[itemlist[i]])
         print(string)
         info = select_mysql(string)
         # print（info）
