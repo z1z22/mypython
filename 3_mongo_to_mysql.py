@@ -16,8 +16,8 @@ class PyMongo(object):
     def getlist(self, collection, title):
         '''从mongodb中查询提取数据,返回数据列表'''
         coll = self.db[collection]
-        result = coll.find({'title': title}, {'picname': 1,
-                                              'src': 1, 'picstore': 1})  # .distinct('src')
+        result = coll.find({'dirname': title}, {'_id':0,'picname': 1,'src': 1, 'dirpath': 1})#.distinct('src')
+        print(result)
         return result
 
     def insert(self, collection, **kw):
@@ -51,7 +51,7 @@ class PyMysql(object):
     def getlist(self, mytable):
         '''查询关联数据库, 从mysql里提取并返回id,及其他字段字典列表'''
         # sql = "SELECT * FROM %s where titletag_id>10"%mytable
-        sql = "SELECT * FROM %s where titletag_id=27" % mytable
+        sql = "SELECT * FROM %s " % mytable
         # 使用 cursor() 方法创建一个游标对象 cursor
         cursor = self.db.cursor()
         titlelist = []
@@ -72,7 +72,7 @@ class PyMysql(object):
         '''向mysql插入数据,具体字段需根据数据库结构做修改'''
         cursor = self.db.cursor()
         sql = "INSERT INTO %s(PICNAME,SRC,PICSTORE,PICTITLE_ID) VALUES('%s','%s','%s','%s')" % (
-            table, picdict['picname'], picdict['src'], picdict['picstore'], picid,)
+            table, picdict['picname'], picdict['src'], picdict['dirpath'], picid,)
         try:
             cursor.execute(sql)
             self.db.commit()
@@ -110,19 +110,24 @@ def main():
 
     titlelist = sq.getlist('meitu_title')
     for titledict in titlelist:
-        print(titledict)
-        piclist = mg.getlist('ishsh', titledict['title'])
+        # print(titledict)
+        piclist = mg.getlist('meitulu', titledict['title'])
+
+
         # piclist = mg.getlist('mmonly',titledict['title'])
     # 	# dp = DuplicatesPipeline()
+
         for picdict in piclist:
+
             # if 'zhuamei.net' in picdict['src']:
             # 	picdict['src'] = picdict['src'].replace('zhuamei.net', 'zhuamei5.com')
             # else:
             # 	picdict['src'] = 'http://www.zhuamei5.com/' + picdict['src']
             # 		# picdict = dp.process_item(picdict)
-            print(picdict['picname'], picdict['src'], str(titledict['id']))
+            print(picdict['picname'], picdict['src'], titledict['id'])
+            # print(titledict['id'])
             # if picdict is None:
-            # 	continue∫
+            # 	continue
             # else:
             sq.insert('meitu_pic', picdict, titledict['id'])
     sq.close()

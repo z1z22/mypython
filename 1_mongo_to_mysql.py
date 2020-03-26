@@ -5,7 +5,7 @@ import pymongo
 client = pymongo.MongoClient(host='localhost', port=27017)
 mongo_db = client['scrapy_db']
 # coll = mongo_db['mmonly']
-coll = mongo_db['ishsh']
+coll = mongo_db['meitulu']
 
 db = pymysql.connect('localhost', 'root', 'oooo0000', 'mydjango')
 cursor = db.cursor()
@@ -30,7 +30,7 @@ def mysql_close():
 
 
 def mongodb_find():
-    item_list = coll.find({}, {'tag': 1}).distinct('tag')
+    item_list = coll.find({}, {'title': 1}).distinct('title')
     # for item in item_list:
     # taglist = list(set([i['tag'] for i in item_list]))
     return item_list

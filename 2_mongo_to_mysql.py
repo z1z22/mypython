@@ -4,7 +4,7 @@ import pymongo
 
 client = pymongo.MongoClient(host='localhost', port=27017)
 mongo_db = client['scrapy_db']
-coll = mongo_db['ishsh']
+coll = mongo_db['meitulu']
 # coll = mongo_db['mmonly']
 
 db = pymysql.connect('localhost', 'root', 'oooo0000', 'mydjango')
@@ -50,29 +50,31 @@ def idmysql(mytable):
 
 
 def searchmongo(tag):
-    item_list = coll.find({'tag': tag}, {'title': 1}).distinct(
-        'title')  # .sort('title')
+    item_list = coll.find({'title': tag}, {'dirname': 1}).distinct(
+        'dirname')  # .sort('title')
     # title_list = list(set([i['dirname'] for i in item_list]))
     return item_list
 
 
 def main():
 
-    # taglist = idmysql('meitu_tag')
-    # for tagdict in taglist:
-    # 	titlelist = searchmongo(tagdict['tag'])
-    # 	for title in titlelist:
-    # 		print(title,tagdict['id'])
+    taglist = idmysql('meitu_tag')
+    # print(taglist)
+    for tagdict in taglist:
+        titlelist = searchmongo(tagdict['tag'])
+        # print(titlelist)
+        for title in titlelist:
+            print(title,tagdict['id'])
 
-    # 		mysql_insert(title, tagdict['id'])
-    # mysql_close()
-
-    titlelist = searchmongo('Aiss爱丝')
-    for title in titlelist:
-        print(title)
-
-        mysql_insert(title, 27)
+            mysql_insert(title, tagdict['id'])
     mysql_close()
+
+    # titlelist = searchmongo('Aiss爱丝')
+    # for title in titlelist:
+    #     print(title)
+
+        # mysql_insert(title, 27)
+    # mysql_close()
 
 
 if __name__ == '__main__':
