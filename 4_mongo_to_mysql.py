@@ -17,7 +17,7 @@ class PyMongo(object):
         '''从mongodb中查询提取数据,返回数据列表'''
         coll = self.db[collection]
         # .distinct('src')#'picstore':1})
-        result = coll.find({'title': title}, {'picname': 1, 'src': 1, })
+        result = coll.find({'dirname': title}, {'picname': 1, 'dirpath': 1, 'src': 1, })
         return result
 
     def insert(self, collection, **kw):
@@ -50,7 +50,7 @@ class PyMysql(object):
 
     def getlist(self, mytable, _id):
         '''查询关联数据库, 从mysql里提取并返回id,及其他字段字典列表'''
-        sql = "SELECT * FROM %s where id = %s" % (mytable, _id)
+        sql = "SELECT * FROM %s where %s" % (mytable, _id)
         # 使用 cursor() 方法创建一个游标对象 cursor
         cursor = self.db.cursor()
         titlelist = []
@@ -70,13 +70,16 @@ class PyMysql(object):
     def insert(self, table, picdict, picid):
         '''向mysql插入数据,具体字段需根据数据库结构做修改'''
         cursor = self.db.cursor()
-        sql = "INSERT INTO %s(PICNAME,SRC,PICTITLE_ID) VALUES('%s','%s','%s')" % (
-            table, picdict['picname'], picdict['src'], picid,)
+        sql = "INSERT INTO %s(PICNAME,SRC,PICSTORE,PICTITLE_ID) VALUES('%s','%s','%s','%s')" % (
+            table, picdict['picname'], picdict['src'], picdict['dirpath'],picid,)
+        print(sql)
         try:
             cursor.execute(sql)
             self.db.commit()
+            print('—————————写入mysql成功————————')
         except:
             self.db.rollback()
+            print('**********写入mysql失败**********')
 
     def close(self):
         '''关闭数据库'''
@@ -107,22 +110,23 @@ def main():
     # 实例化并登陆mongodb
     mg = PyMongo('scrapy_db', )
 
-    id_list = [17187]
-    for _id in id_list:
+    with open('titleid.txt', 'r') as f:
+        string = f.readlines()
+    for where_string in string:
+        # print(where_string)
 
-        titlelist = sq.getlist('meituri_title', _id)
+        titlelist = sq.getlist('meitu_title', where_string)
         for titledict in titlelist:
-            print(titledict)
-            piclist = mg.getlist('meituri_sql', titledict['title'])
-            # dp = DuplicatesPipeline()
+            piclist = mg.getlist('meitulu', titledict['title'])
+    #         # dp = DuplicatesPipeline()
             for picdict in piclist:
 
-                # picdict = dp.process_item(picdict)
-                print(picdict['picname'], picdict['src'], str(titledict['id']))
+    #             # picdict = dp.process_item(picdict)
+                # print(picdict['picname'], picdict['src'], str(titledict['id']))
                 if picdict is None:
                     continue
                 else:
-                    sq.insert('meituri_pic', picdict, titledict['id'])
+                    sq.insert('meitu_pic', picdict, titledict['id'])
     sq.close()
 
 

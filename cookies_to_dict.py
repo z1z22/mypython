@@ -1,0 +1,4 @@
+cookies = 'dialog=hide; p_h5_u=68104CD1-0230-4231-B6BB-295F2D729E64; ZNb8_2132_saltkey=VVKtM1c1; ZNb8_2132_lastvisit=1585525601; ZNb8_2132_visitedfid=75; ZNb8_2132_ulastactivity=f39cE6GXR8zpzy8BfAW7QQgWT64kplvdG%2BBfTlxlKMky%2B6FHz%2B04; ZNb8_2132_sid=S0Si1g; Hm_lvt_e88802ce5dc34c05147f549c8161c0c2=1585460889,1585461078,1585495942,1585529236; ZNb8_2132_seccode=1195.fcaa37ea6ee9e7d2ad; ZNb8_2132_auth=7144EE3XuolVQxQ4SpFK72vOR16EkOLxwNEpr%2BjqerIh4Nvn3NBlVVeNYs20hLILzq%2BvCwS6b6HSsI8gTzojTC%2FidA; ZNb8_2132_lastcheckfeed=23318%7C1585529263; ZNb8_2132_nofavfid=1; ZNb8_2132_lastact=1585529691%09forum.php%09forumdisplay; ZNb8_2132_st_t=23318%7C1585529691%7C16b4c78784d56eec58c8c92c4560a184; ZNb8_2132_forum_lastvisit=D_75_1585529691; Hm_lpvt_e88802ce5dc34c05147f549c8161c0c2=1585529693'
+
+cookies_dict = "{'"+cookies.replace('=',"': '").replace('; ', "',\n'") + "'}"
+print(cookies_dict)
