@@ -50,7 +50,7 @@ def insert_mysql(item):
 def main():
     item={}
     itemlist = ['password','username','webname','email','telephone']
-    i = input('您要查询的字段：用户名(1),网站或应用名称(2),邮箱(3),手机号(4),其余键退出:')
+    i = input('您要查询的字段：(1)用户名, (2)网站或应用名称, (3)邮箱, (4)手机号, 其余键退出:')
     if i in ['0','1','2','3','4']:
         i = int(i)
     else:

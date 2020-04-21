@@ -25,8 +25,8 @@ soup = BeautifulSoup(open('renren_home.html'),'lxml')
 #print(soup.a.get_text())
 #print(soup.find('a',title = 'xxx'))#只找到第一个
 #print(soup.find('a',class_ = 'xxx'))#找到所有a
-#print(soup.find_all('a'),alt = 'xxx')#找到所有a
-#print(soup.find_all('a'),id = 'xxx')#找到所有a
+#print(soup.find_all('a',alt = 'xxx'))#找到所有a
+#print(soup.find_all('a',id = 'xxx'))#找到所有a
 
 #div = soup.find('a',id = 'xxx')
 #div.find(div,id='xxx')
